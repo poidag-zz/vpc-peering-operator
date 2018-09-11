@@ -1,0 +1,3 @@
+apiVersion: r4.vc/v1
+kind: VpcPeering
+projectName: vpc-peering-operator

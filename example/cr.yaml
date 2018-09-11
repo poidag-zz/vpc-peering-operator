@@ -1,0 +1,11 @@
+apiVersion: "r4.vc/v1"
+kind: "VpcPeering"
+metadata:
+  name: "test"
+spec:
+  source_vpcid: "vpc-xxxxxxx"
+  peer_vpcid: "vpc-xxxxxxx"
+  peer_owner: "xxxxxxx"
+  peer_cidr: "192.168.1.1/32"
+  peer_region: "eu-west-1"
+  allow_dns_resolution: true

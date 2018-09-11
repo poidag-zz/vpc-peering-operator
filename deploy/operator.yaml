@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vpc-peering-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: vpc-peering-operator
+  template:
+    metadata:
+      labels:
+        name: vpc-peering-operator
+    spec:
+      containers:
+        - name: vpc-peering-operator
+          image: quay.io/pickledrick/vpc-peering-operator
+          ports:
+          - containerPort: 60000
+            name: metrics
+          command:
+          - vpc-peering-operator
+          imagePullPolicy: Always
+          env:
+            - name: WATCH_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: OPERATOR_NAME
+              value: "vpc-peering-operator"
