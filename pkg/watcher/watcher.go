@@ -15,6 +15,7 @@ const (
 	logStatusActive = "peering became active"
 	logUpdateRoutes = "updating vpc route tables"
 	logTimedOut     = "timed out waiting for peering to become active"
+	logCidrMismatch = "peering became active with cidr mismatch"
 )
 
 type Watcher interface {
@@ -57,9 +58,15 @@ func (w *VpcPeeringWatcher) Watch(o *v1.VpcPeering) {
 		}
 
 		if peer.VpcPeeringConnections != nil {
-			switch status := *peer.VpcPeeringConnections[0].Status.Code; status {
+			p := *peer.VpcPeeringConnections[0]
+			switch status := *p.Status.Code; status {
 			case "active":
 				w.logger.Log("msg", logStatusActive)
+				if o.Spec.PeerCIDR != *p.AccepterVpcInfo.CidrBlock {
+					w.logger.Log("msg", logCidrMismatch)
+					m.UpdateStatus(o, "active-cidr-mismatch")
+					return
+				}
 				if w.cfg.ManageRoutes {
 					w.logger.Log("msg", logUpdateRoutes)
 					err := c.CreateRoutes(o)
