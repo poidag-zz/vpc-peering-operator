@@ -42,12 +42,12 @@ func New(cfg *wiring.Config, logger log.Logger) sdk.Handler {
 }
 
 func (h *VpcPeeringHandler) Handle(ctx context.Context, event sdk.Event) error {
-
 	switch o := event.Object.(type) {
 	case *v1.VpcPeering:
 		vpcpeering := o
+		eventLogger := log.With(h.logger, "namespace", vpcpeering.GetNamespace(), "vpcpeering", vpcpeering.GetName())
 		if event.Deleted {
-			deleteLogger := log.With(h.logger, "action", "delete", "peering", vpcpeering.Status.PeeringId)
+			deleteLogger := log.With(eventLogger, "action", "delete", "peering-id", vpcpeering.Status.PeeringId)
 			if h.cfg.ManageRoutes && vpcpeering.Status.Status == "active" {
 				err := h.client.DeleteRoutes(o)
 				if err != nil {
@@ -62,7 +62,7 @@ func (h *VpcPeeringHandler) Handle(ctx context.Context, event sdk.Event) error {
 			return nil
 		}
 
-		createLogger := log.With(h.logger, "action", "create")
+		createLogger := log.With(eventLogger, "action", "create")
 		p, err := h.client.CreatePeering(o)
 		if err != nil {
 			createLogger.Log("err", err)
@@ -72,7 +72,7 @@ func (h *VpcPeeringHandler) Handle(ctx context.Context, event sdk.Event) error {
 
 			vpcpeering.Status.PeeringId = p.VpcPeeringConnection.VpcPeeringConnectionId
 			vpcpeering.Status.Status = "requested"
-			createLogger = log.With(createLogger, "peering", vpcpeering.Status.PeeringId)
+			createLogger = log.With(createLogger, "peering-id", vpcpeering.Status.PeeringId)
 
 			err := sdk.Update(vpcpeering)
 			if err != nil {
@@ -81,7 +81,7 @@ func (h *VpcPeeringHandler) Handle(ctx context.Context, event sdk.Event) error {
 
 			createLogger.Log("msg", logCreateSuccess)
 
-			w := watcher.New(h.cfg, log.With(h.logger, "action", "watch", "peering", vpcpeering.Status.PeeringId))
+			w := watcher.New(h.cfg, log.With(eventLogger, "action", "watch", "peering-id", vpcpeering.Status.PeeringId))
 
 			go w.Watch(o)
 		}
