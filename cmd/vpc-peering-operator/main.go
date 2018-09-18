@@ -50,7 +50,7 @@ func init() {
 	logger = log.NewLogfmtLogger(log.NewSyncWriter(os.Stderr))
 	logger.Log("msg", "Starting VPC Peering Operator version", "version", version)
 
-	if err := envconfig.InitWithPrefix(&cfg, "OPERATOR"); err != nil {
+	if err := envconfig.Init(&cfg); err != nil {
 		level.Error(logger).Log("msg", "Error loading config: %s", "err", err.Error())
 	}
 

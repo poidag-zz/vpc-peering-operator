@@ -96,11 +96,11 @@ kubectl delete -f bundle.yaml
 Configuration is built through environment variables currently defined in `deploy/operator.yaml`
 Below are the available configuration options
 
-| Environment Variable           | Description                                                      | Default                |
-| ------------------------------ | ---------------------------------------------------------------- | ---------------------- |
-| `MANAGE_ROUTES`                | Maintain routes in VPC route tables for the peering              | `true`                 |
-| `OPERATOR_NAME`                | The name of the operator                                         | `vpc-peering-operator` |
-| `WATCH_ALL_NAMESPACES`         | Override the SDK and listen to events in all namespaces          | `false`                |
-| `OPERATOR_POLLER_RETRIES`      | The amount of retries for waiting for a peering to become active | `5`                    |
-| `OPERATOR_POLLER_WAIT_SECONDS` | The number of seconds to wait between retries                    | `60`                   |
-| `WATCH_NAMESPACE`              | The namespace to watch for CRD events                            | `metadata.namespace`   |
+| Environment Variable   | Description                                                      | Default                |
+| ---------------------- | ---------------------------------------------------------------- | ---------------------- |
+| `MANAGE_ROUTES`        | Maintain routes in VPC route tables for the peering              | `true`                 |
+| `OPERATOR_NAME`        | The name of the operator                                         | `vpc-peering-operator` |
+| `WATCH_ALL_NAMESPACES` | Override the SDK and listen to events in all namespaces          | `false`                |
+| `POLLER_RETRIES`       | The amount of retries for waiting for a peering to become active | `5`                    |
+| `POLLER_WAIT_SECONDS`  | The number of seconds to wait between retries                    | `60`                   |
+| `WATCH_NAMESPACE`      | The namespace to watch for CRD events                            | `metadata.namespace`   |

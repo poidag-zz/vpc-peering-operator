@@ -16,10 +16,10 @@ spec:
         - name: vpc-peering-operator
           image: quay.io/pickledrick/vpc-peering-operator
           ports:
-          - containerPort: 60000
-            name: metrics
+            - containerPort: 60000
+              name: metrics
           command:
-          - vpc-peering-operator
+            - vpc-peering-operator
           imagePullPolicy: Always
           env:
             - name: WATCH_NAMESPACE
