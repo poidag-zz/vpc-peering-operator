@@ -3,7 +3,7 @@ package amazon
 import (
 	"fmt"
 	"github.com/aws/aws-sdk-go/service/ec2"
-	"gitlab.com/pickledrick/vpc-peering-operator/pkg/apis/r4/v1"
+	"github.com/pickledrick/vpc-peering-operator/pkg/apis/r4/v1"
 )
 
 func (c *AwsClient) CreateRoutes(o *v1.VpcPeering) error {
