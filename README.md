@@ -1,5 +1,7 @@
 # VPC Peering Operator
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/pickledrick/vpc-peering-operator)](https://goreportcard.com/report/github.com/pickledrick/vpc-peering-operator)
+
 The VPC Peering operator for Kubernetes provides a way to natively define a vpc peering as a Kubernetes object and handles the lifecycle around the Peering and Routing for a VPC.
 
 The premise of this operator is to serve as a self service tool to allow users running in a multi tenant cluster to manage peerings to other AWS VPC's for consumption of their resources.
