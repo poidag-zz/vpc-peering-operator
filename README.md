@@ -3,6 +3,8 @@
 [![Build Status](https://travis-ci.org/pickledrick/vpc-peering-operator.svg?branch=master)](https://travis-ci.org/pickledrick/vpc-peering-operator)
 [![Go Report Card](https://goreportcard.com/badge/github.com/pickledrick/vpc-peering-operator)](https://goreportcard.com/report/github.com/pickledrick/vpc-peering-operator)
 
+> Manage VPC Peerings in Kubernetes
+
 The VPC Peering operator for Kubernetes provides a way to natively define a vpc peering as a Kubernetes object and handles the lifecycle around the Peering and Routing for a VPC.
 
 The premise of this operator is to serve as a self service tool to allow users running in a multi tenant cluster to manage peerings to other AWS VPC's for consumption of their resources.
@@ -12,7 +14,7 @@ The premise of this operator is to serve as a self service tool to allow users r
 The Operator acts on the following [custom resource definitions (CRDs)](https://kubernetes.io/docs/tasks/access-kubernetes-api/extend-api-custom-resource-definitions/):
 
 - **`VpcPeering`**, which defines a desired VPC Peering.
-  The Operator Creates a VPC Peering request upon creation of a VpcPeering CRD. A configurable wait timeout is defined to wait for an accept from another account.
+  The Operator Creates a VPC Peering request upon creation of a VpcPeering CRD. A configurable wait timeout is defined to wait for an accept from the peered account, when the peering becomes active the source VPCs route tables can then be managed automatically.
 
 | Parameter                 | Description                                   | Default |
 | ------------------------- | --------------------------------------------- | ------- |
