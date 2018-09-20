@@ -5,6 +5,7 @@ type Config struct {
 		Retries     int `envconfig:"default=5"`
 		WaitSeconds int `envconfig:"default=60"`
 	}
-	ManageRoutes       bool `envconfig:"default=true"`
-	WatchAllNamespaces bool `envconfig:"default=false"`
+	ManageRoutes       bool   `envconfig:"default=true"`
+	WatchAllNamespaces bool   `envconfig:"default=false"`
+	ClusterName        string `envconfig:"default=default"`
 }

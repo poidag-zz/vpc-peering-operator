@@ -2,11 +2,19 @@ package amazon
 
 import (
 	"fmt"
+	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/ec2"
 	"github.com/pickledrick/vpc-peering-operator/pkg/apis/r4/v1"
+	"github.com/pickledrick/vpc-peering-operator/pkg/wiring"
 )
 
-func (c *AwsClient) CreateRoutes(o *v1.VpcPeering) error {
+var (
+	clusterKey   = "r4.vc.vpc-peering-operator/cluster"
+	namespaceKey = "r4.vc.vpc-peering-operator/namespace"
+	sourceKey    = "r4.vc.vpc-peering-operator/source"
+)
+
+func (c *AwsClient) CreateRoutes(o *v1.VpcPeering, cfg *wiring.Config) error {
 
 	reqKey := "vpc-id"
 	reqVal := o.Spec.SourceVpcId
@@ -26,7 +34,10 @@ func (c *AwsClient) CreateRoutes(o *v1.VpcPeering) error {
 		return err
 	}
 
+	var resources []*string
+
 	for _, rtb := range rtbs.RouteTables {
+		resources = append(resources, rtb.RouteTableId)
 		routeInput := ec2.CreateRouteInput{
 			DestinationCidrBlock:   &o.Spec.PeerCIDR,
 			VpcPeeringConnectionId: o.Status.PeeringId,
@@ -45,6 +56,23 @@ func (c *AwsClient) CreateRoutes(o *v1.VpcPeering) error {
 		}
 
 	}
+
+	tags := []*ec2.Tag{
+		{
+			Key:   aws.String(clusterKey),
+			Value: aws.String(cfg.ClusterName),
+		},
+		{
+			Key:   aws.String(o.Namespace),
+			Value: aws.String(o.Namespace),
+		},
+		{
+			Key:   aws.String(o.Name),
+			Value: aws.String(o.Name),
+		},
+	}
+
+	_, err = c.CreateTags(resources, tags)
 	return err
 }
 

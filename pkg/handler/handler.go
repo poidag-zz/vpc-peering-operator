@@ -3,9 +3,10 @@ package handler
 import (
 	"context"
 
-	"github.com/operator-framework/operator-sdk/pkg/sdk"
-
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/service/ec2"
 	"github.com/go-kit/kit/log"
+	"github.com/operator-framework/operator-sdk/pkg/sdk"
 	"github.com/pickledrick/vpc-peering-operator/pkg/amazon"
 	"github.com/pickledrick/vpc-peering-operator/pkg/apis/r4/v1"
 	"github.com/pickledrick/vpc-peering-operator/pkg/watcher"
@@ -14,9 +15,17 @@ import (
 	"reflect"
 )
 
+var (
+	clusterKey   = "r4.vc.vpc-peering-operator/cluster"
+	namespaceKey = "r4.vc.vpc-peering-operator/namespace"
+	sourceKey    = "r4.vc.vpc-peering-operator/source"
+)
+
 const (
 	logCreateSuccess = "successfully created peering"
 	logDeleteSuccess = "sucessfully deleted peering"
+	logTagFailure    = "failed to tag peering"
+	logTagSuccess    = "successfully tagged peering"
 )
 
 type Handler interface {
@@ -44,8 +53,10 @@ func New(cfg *wiring.Config, logger log.Logger) sdk.Handler {
 func (h *VpcPeeringHandler) Handle(ctx context.Context, event sdk.Event) error {
 	switch o := event.Object.(type) {
 	case *v1.VpcPeering:
+
 		vpcpeering := o
-		eventLogger := log.With(h.logger, "namespace", vpcpeering.GetNamespace(), "vpcpeering", vpcpeering.GetName())
+
+		eventLogger := log.With(h.logger, "namespace", vpcpeering.ObjectMeta.Namespace, "vpcpeering", vpcpeering.ObjectMeta.Name)
 		if event.Deleted {
 			deleteLogger := log.With(eventLogger, "action", "delete", "peering-id", vpcpeering.Status.PeeringId)
 			if h.cfg.ManageRoutes && vpcpeering.Status.Status == "active" {
@@ -80,6 +91,32 @@ func (h *VpcPeeringHandler) Handle(ctx context.Context, event sdk.Event) error {
 			}
 
 			createLogger.Log("msg", logCreateSuccess)
+
+			tags := []*ec2.Tag{
+				{
+					Key:   aws.String(clusterKey),
+					Value: aws.String(h.cfg.ClusterName),
+				},
+				{
+					Key:   aws.String(namespaceKey),
+					Value: aws.String(o.Namespace),
+				},
+				{
+					Key:   aws.String(sourceKey),
+					Value: aws.String(o.Name),
+				},
+			}
+
+			resources := []*string{p.VpcPeeringConnection.VpcPeeringConnectionId}
+
+			t, err := h.client.CreateTags(resources, tags)
+			if err != nil {
+				createLogger.Log("msg", logTagFailure, "err", err)
+				createLogger.Log("tags", t.String())
+			} else {
+				createLogger.Log("msg", logTagSuccess)
+				createLogger.Log("tags", t.String())
+			}
 
 			w := watcher.New(h.cfg, log.With(eventLogger, "action", "watch", "peering-id", vpcpeering.Status.PeeringId))
 

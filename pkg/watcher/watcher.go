@@ -69,7 +69,7 @@ func (w *VpcPeeringWatcher) Watch(o *v1.VpcPeering) {
 				}
 				if w.cfg.ManageRoutes {
 					w.logger.Log("msg", logUpdateRoutes)
-					err := c.CreateRoutes(o)
+					err := c.CreateRoutes(o, w.cfg)
 					if err != nil {
 						w.logger.Log("err", err)
 						m.UpdateStatus(o, "failed-adding-routes")
