@@ -3,10 +3,10 @@ package watcher
 import (
 	"github.com/aws/aws-sdk-go/service/ec2"
 	"github.com/go-kit/kit/log"
-	"gitlab.com/pickledrick/vpc-peering-operator/pkg/amazon"
-	"gitlab.com/pickledrick/vpc-peering-operator/pkg/apis/r4/v1"
-	"gitlab.com/pickledrick/vpc-peering-operator/pkg/peering"
-	"gitlab.com/pickledrick/vpc-peering-operator/pkg/wiring"
+	"github.com/pickledrick/vpc-peering-operator/pkg/amazon"
+	"github.com/pickledrick/vpc-peering-operator/pkg/apis/r4/v1"
+	"github.com/pickledrick/vpc-peering-operator/pkg/peering"
+	"github.com/pickledrick/vpc-peering-operator/pkg/wiring"
 	"time"
 )
 

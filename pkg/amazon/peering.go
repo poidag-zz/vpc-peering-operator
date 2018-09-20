@@ -2,7 +2,7 @@ package amazon
 
 import (
 	"github.com/aws/aws-sdk-go/service/ec2"
-	"gitlab.com/pickledrick/vpc-peering-operator/pkg/apis/r4/v1"
+	"github.com/pickledrick/vpc-peering-operator/pkg/apis/r4/v1"
 )
 
 // CreatePeering - Creates an AWS VPC Peering based a new CRD object creation

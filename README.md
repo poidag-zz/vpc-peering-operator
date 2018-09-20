@@ -1,5 +1,6 @@
 # VPC Peering Operator
 
+[![Build Status](https://travis-ci.org/pickledrick/vpc-peering-operator.svg?branch=master)](https://travis-ci.org/pickledrick/vpc-peering-operator)
 [![Go Report Card](https://goreportcard.com/badge/github.com/pickledrick/vpc-peering-operator)](https://goreportcard.com/report/github.com/pickledrick/vpc-peering-operator)
 
 The VPC Peering operator for Kubernetes provides a way to natively define a vpc peering as a Kubernetes object and handles the lifecycle around the Peering and Routing for a VPC.

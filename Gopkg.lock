@@ -248,6 +248,19 @@
   revision = "51288eb7f0a014fc9a43a81eabb14cc0bde11d7d"
 
 [[projects]]
+  name = "github.com/pickledrick/vpc-peering-operator"
+  packages = [
+    "pkg/amazon",
+    "pkg/apis/r4/v1",
+    "pkg/handler",
+    "pkg/peering",
+    "pkg/watcher",
+    "pkg/wiring"
+  ]
+  revision = "5e03f40af0e780435c62ade14ab6c846ef5595b3"
+  version = "0.0.1"
+
+[[projects]]
   name = "github.com/prometheus/client_golang"
   packages = [
     "prometheus",
@@ -578,6 +591,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "869f317d56d4c479c0f95dade7154774fa7da36234e6614c7634695ea85b47a0"
+  inputs-digest = "599133f3c54f32851a01b040fc6aeb99b0a36ccdf799d5f139b986fb86e023cf"
   solver-name = "gps-cdcl"
   solver-version = 1

@@ -6,10 +6,10 @@ import (
 	"github.com/operator-framework/operator-sdk/pkg/sdk"
 
 	"github.com/go-kit/kit/log"
-	"gitlab.com/pickledrick/vpc-peering-operator/pkg/amazon"
-	"gitlab.com/pickledrick/vpc-peering-operator/pkg/apis/r4/v1"
-	"gitlab.com/pickledrick/vpc-peering-operator/pkg/watcher"
-	"gitlab.com/pickledrick/vpc-peering-operator/pkg/wiring"
+	"github.com/pickledrick/vpc-peering-operator/pkg/amazon"
+	"github.com/pickledrick/vpc-peering-operator/pkg/apis/r4/v1"
+	"github.com/pickledrick/vpc-peering-operator/pkg/watcher"
+	"github.com/pickledrick/vpc-peering-operator/pkg/wiring"
 
 	"reflect"
 )

@@ -3,7 +3,7 @@ package peering
 import (
 	"github.com/operator-framework/operator-sdk/pkg/sdk"
 
-	"gitlab.com/pickledrick/vpc-peering-operator/pkg/apis/r4/v1"
+	"github.com/pickledrick/vpc-peering-operator/pkg/apis/r4/v1"
 
 	"reflect"
 )

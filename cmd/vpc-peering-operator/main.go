@@ -8,9 +8,9 @@ import (
 	"github.com/go-kit/kit/log/level"
 	sdk "github.com/operator-framework/operator-sdk/pkg/sdk"
 	"github.com/operator-framework/operator-sdk/pkg/util/k8sutil"
+	"github.com/pickledrick/vpc-peering-operator/pkg/handler"
+	"github.com/pickledrick/vpc-peering-operator/pkg/wiring"
 	"github.com/vrischmann/envconfig"
-	"gitlab.com/pickledrick/vpc-peering-operator/pkg/handler"
-	"gitlab.com/pickledrick/vpc-peering-operator/pkg/wiring"
 	"os"
 )
 
