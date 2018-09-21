@@ -62,11 +62,11 @@ func (w *VpcPeeringWatcher) Watch(o *v1.VpcPeering) {
 			switch status := *p.Status.Code; status {
 			case "active":
 				w.logger.Log("msg", logStatusActive)
-				if o.Spec.PeerCIDR != *p.AccepterVpcInfo.CidrBlock {
-					w.logger.Log("msg", logCidrMismatch)
-					m.UpdateStatus(o, "active-cidr-mismatch")
-					return
-				}
+				// if o.Spec.PeerCIDR != *p.AccepterVpcInfo.CidrBlock {
+				// 	w.logger.Log("msg", logCidrMismatch)
+				// 	m.UpdateStatus(o, "active-cidr-mismatch")
+				// 	return
+				// }
 				if w.cfg.ManageRoutes {
 					w.logger.Log("msg", logUpdateRoutes)
 					err := c.CreateRoutes(o, w.cfg)

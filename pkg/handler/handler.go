@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/service/ec2"
 	"github.com/go-kit/kit/log"
 	"github.com/operator-framework/operator-sdk/pkg/sdk"
@@ -16,9 +17,9 @@ import (
 )
 
 var (
-	clusterKey   = "r4.vc.vpc-peering-operator/cluster"
-	namespaceKey = "r4.vc.vpc-peering-operator/namespace"
-	sourceKey    = "r4.vc.vpc-peering-operator/source"
+	clusterKey   = "vpc-peering-operator.r4.vc/cluster"
+	namespaceKey = "vpc-peering-operator.r4.vc/namespace"
+	sourceKey    = "vpc-peering-operator.r4.vc/source"
 )
 
 const (
@@ -107,15 +108,23 @@ func (h *VpcPeeringHandler) Handle(ctx context.Context, event sdk.Event) error {
 				},
 			}
 
-			resources := []*string{p.VpcPeeringConnection.VpcPeeringConnectionId}
+			var resources []*string
+
+			resources = append(resources, aws.String(*p.VpcPeeringConnection.VpcPeeringConnectionId))
 
 			t, err := h.client.CreateTags(resources, tags)
 			if err != nil {
-				createLogger.Log("msg", logTagFailure, "err", err)
-				createLogger.Log("tags", t.String())
+				if aerr, ok := err.(awserr.Error); ok {
+					switch aerr.Code() {
+					default:
+						createLogger.Log("msg", logTagFailure, "err", aerr.Error())
+
+					}
+				} else {
+					createLogger.Log("msg", logTagFailure, "err", err.Error())
+				}
 			} else {
-				createLogger.Log("msg", logTagSuccess)
-				createLogger.Log("tags", t.String())
+				createLogger.Log("msg", logTagSuccess, "tags", t.String())
 			}
 
 			w := watcher.New(h.cfg, log.With(eventLogger, "action", "watch", "peering-id", vpcpeering.Status.PeeringId))
