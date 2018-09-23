@@ -1,0 +1,56 @@
+module github.com/pickledrick/vpc-peering-operator
+
+require (
+	github.com/PuerkitoBio/purell v1.1.0
+	github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578
+	github.com/aws/aws-sdk-go v1.15.31
+	github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973
+	github.com/davecgh/go-spew v1.1.1
+	github.com/emicklei/go-restful v2.8.0+incompatible
+	github.com/ghodss/yaml v1.0.0
+	github.com/go-ini/ini v1.38.2
+	github.com/go-kit/kit v0.7.0
+	github.com/go-logfmt/logfmt v0.3.0
+	github.com/go-openapi/jsonpointer v0.0.0-20180322222829-3a0015ad55fa
+	github.com/go-openapi/jsonreference v0.0.0-20180322222742-3fb327e6747d
+	github.com/go-openapi/spec v0.0.0-20180801175345-384415f06ee2
+	github.com/go-openapi/swag v0.0.0-20180715190254-becd2f08beaf
+	github.com/go-stack/stack v1.8.0
+	github.com/gogo/protobuf v1.1.1
+	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
+	github.com/golang/protobuf v1.2.0
+	github.com/google/gofuzz v0.0.0-20170612174753-24818f796faf
+	github.com/googleapis/gnostic v0.2.0
+	github.com/hashicorp/golang-lru v0.0.0-20180201235237-0fb14efe8c47
+	github.com/howeyc/gopass v0.0.0-20170109162249-bf9dde6d0d2c
+	github.com/imdario/mergo v0.3.6
+	github.com/jmespath/go-jmespath v0.0.0-20160202185014-0b12d6b521d8
+	github.com/json-iterator/go v1.1.5
+	github.com/kr/logfmt v0.0.0-20140226030751-b84e30acd515
+	github.com/mailru/easyjson v0.0.0-20180823135443-60711f1a8329
+	github.com/matttproud/golang_protobuf_extensions v1.0.1
+	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd
+	github.com/modern-go/reflect2 v0.0.0-20180701023420-4b7aa43c6742
+	github.com/operator-framework/operator-sdk v0.0.0-20180828201340-51288eb7f0a0
+	github.com/prometheus/client_golang v0.8.0
+	github.com/prometheus/client_model v0.0.0-20180712105110-5c3871d89910
+	github.com/prometheus/common v0.0.0-20180801064454-c7de2306084e
+	github.com/prometheus/procfs v0.0.0-20180725123919-05ee40e3a273
+	github.com/sirupsen/logrus v1.0.6
+	github.com/spf13/pflag v1.0.2
+	github.com/vrischmann/envconfig v1.1.0
+	golang.org/x/crypto v0.0.0-20180820150726-614d502a4dac
+	golang.org/x/net v0.0.0-20180826012351-8a410e7b638d
+	golang.org/x/sys v0.0.0-20180828065106-d99a578cf41b
+	golang.org/x/text v0.3.0
+	golang.org/x/time v0.0.0-20180412165947-fbb02b2291d2
+	golang.org/x/tools v0.0.0-20180828015842-6cd1fcedba52
+	gopkg.in/inf.v0 v0.9.1
+	gopkg.in/yaml.v2 v2.2.1
+	k8s.io/api v0.0.0-20180308224125-73d903622b73
+	k8s.io/apimachinery v0.0.0-20180228050457-302974c03f7e
+	k8s.io/client-go v0.0.0-20180406111602-989be4278f35
+	k8s.io/code-generator v0.0.0-20180228050103-7ead8f38b01c
+	k8s.io/gengo v0.0.0-20180813235010-4242d8e6c5db
+	k8s.io/kube-openapi v0.0.0-20180731170545-e3762e86a74c
+)
