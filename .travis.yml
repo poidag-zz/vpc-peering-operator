@@ -6,6 +6,8 @@ go:
 sudo: required
 services:
   - docker
+env:
+  - GO111MODULE=on
 install:
   - go mod download
   - mkdir -p $GOPATH/src/github.com/operator-framework/
