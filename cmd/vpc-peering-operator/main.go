@@ -40,6 +40,7 @@ func main() {
 	if cfg.WatchAllNamespaces {
 		watchNamespace = ""
 	}
+
 	sdk.Watch(resource, kind, watchNamespace, resyncPeriod)
 	sdk.Handle(handler.New(&cfg, logger))
 	sdk.Run(context.TODO())

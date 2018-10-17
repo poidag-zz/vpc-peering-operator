@@ -63,29 +63,32 @@ func (h *VpcPeeringHandler) Handle(ctx context.Context, event sdk.Event) error {
 		}
 
 		createLogger := log.With(eventLogger, "action", "create")
-		p, err := h.client.CreatePeering(o)
-		if err != nil {
-			createLogger.Log("err", err)
-		}
 
-		if !reflect.DeepEqual(p.VpcPeeringConnection.VpcPeeringConnectionId, vpcpeering.Status.PeeringId) {
-
-			vpcpeering.Status.PeeringId = p.VpcPeeringConnection.VpcPeeringConnectionId
-			vpcpeering.Status.Status = "requested"
-			createLogger = log.With(createLogger, "peering-id", vpcpeering.Status.PeeringId)
-
-			err := sdk.Update(vpcpeering)
+		if vpcpeering.Status.Status == "" {
+			p, err := h.client.CreatePeering(o)
 			if err != nil {
 				createLogger.Log("err", err)
 			}
 
-			createLogger.Log("msg", logCreateSuccess)
+			if !reflect.DeepEqual(p.VpcPeeringConnection.VpcPeeringConnectionId, vpcpeering.Status.PeeringId) {
 
-			w := watcher.New(h.cfg, log.With(eventLogger, "action", "watch", "peering-id", vpcpeering.Status.PeeringId))
+				vpcpeering.Status.PeeringId = p.VpcPeeringConnection.VpcPeeringConnectionId
+				vpcpeering.Status.Status = "requested"
+				createLogger = log.With(createLogger, "peering-id", vpcpeering.Status.PeeringId)
 
-			go w.Watch(o)
+				err := sdk.Update(vpcpeering)
+				if err != nil {
+					createLogger.Log("err", err)
+				}
+
+				createLogger.Log("msg", logCreateSuccess)
+
+				w := watcher.New(h.cfg, log.With(eventLogger, "action", "watch", "peering-id", vpcpeering.Status.PeeringId))
+
+				go w.Watch(o)
+
+			}
 		}
-
 	}
 
 	return nil

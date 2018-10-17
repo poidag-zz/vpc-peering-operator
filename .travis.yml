@@ -20,5 +20,4 @@ install:
   - make dep
   - make install
   - cd /home/travis/gopath/src/github.com/pickledrick/vpc-peering-operator
-script:
   - make
